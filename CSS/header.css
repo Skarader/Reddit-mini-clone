@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -80,55 +74,4 @@
 }
 .settings:hover {
   background-color: lightgray;
-}
-
-main {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-around;
-}
-
-.sidebar {
-  font-size: 1.4rem;
-  border-right: 1px solid;
-
-  padding-right: 30px;
-  height: 100vh;
-}
-.sidebar ul {
-  list-style: none;
-}
-.sidebar ul li {
-  padding: 5px;
-  cursor: pointer;
-}
-.topics-list {
-  padding: 20px;
-}
-.resources-list {
-  padding: 20px;
-}
-.list-title {
-  font-weight: 300;
-  font-size: 0.8rem;
-  padding: 10px;
-}
-.see-more {
-  font-size: 0.7rem;
-}
-.popular-communities {
-  border-left: 1px solid;
-}
-.popular-title {
-  font-weight: 800;
-  font-size: 1.5rem;
-  padding: 10px;
-}
-.popular-list {
-  background-color: lightgray;
-  padding: 30px;
-  list-style: none;
-}
-.popular-list li {
-  padding: 10px;
 }

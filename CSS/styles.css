@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.see-more {
+  font-size: 0.6rem;
+  border: 2px ridge;
+  cursor: pointer;
+}

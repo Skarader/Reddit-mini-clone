@@ -1,0 +1,32 @@
+.sidebar {
+  font-size: 1.4rem;
+  border-right: 1px solid;
+
+  padding-right: 30px;
+  height: 100vh;
+}
+.sidebar ul {
+  list-style: none;
+}
+.sidebar ul li {
+  padding: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.topics-list {
+  padding: 20px;
+}
+.divider {
+  height: 2px;
+  width: 100%;
+  background-color: black;
+}
+.resources-list {
+  padding: 20px;
+}
+.list-title {
+  font-weight: 300;
+  font-size: 1.2rem;
+  padding-top: 10px;
+  border-bottom: 2px solid;
+}

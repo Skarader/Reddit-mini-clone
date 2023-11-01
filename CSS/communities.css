@@ -1,0 +1,25 @@
+.popular-communities {
+  border-left: 1px solid;
+}
+.popular-title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid;
+}
+.popular-list {
+  background-color: lightgray;
+  padding: 30px;
+  list-style: none;
+
+  border-radius: 25px;
+  position: relative;
+  left: 20px;
+}
+.popular-list li {
+  padding: 15px;
+  cursor: pointer;
+}
+.popular-list li:hover {
+  background-color: rgb(165, 165, 165);
+}
