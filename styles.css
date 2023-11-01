@@ -121,12 +121,12 @@ main {
 }
 .popular-title {
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.5rem;
   padding: 10px;
 }
 .popular-list {
   background-color: lightgray;
-  padding: 5px;
+  padding: 30px;
   list-style: none;
 }
 .popular-list li {
