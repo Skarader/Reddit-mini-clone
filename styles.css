@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.search-bar {
+  width: 40%;
+  height: 45px;
+  border: none;
+  border-radius: 25px;
+
+  padding: 1rem;
+
+  background-color: rgb(240, 240, 240);
+}
+.redditlogo img {
+  width: 130px;
+  cursor: pointer;
+}
+
+.header-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+.get-app {
+  background-color: lightgray;
+  border: none;
+  border-radius: 25px;
+  padding: 0.9rem;
+  margin: 0.5rem;
+
+  cursor: pointer;
+}
+.log-in {
+  background-color: orangered;
+  color: whitesmoke;
+  border: none;
+  border-radius: 25px;
+  padding: 0.9rem;
+  margin: 0.5rem;
+
+  cursor: pointer;
+}
+.settings {
+  border: none;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+
+  padding: 0.5rem;
+
+  cursor: pointer;
+  position: relative;
+}
+.settings::before {
+  content: "...";
+  font-size: 40px;
+  color: gray;
+
+  position: relative;
+  bottom: 18px;
+}
+
+.get-app:hover {
+  background-color: gray;
+}
+.log-in:hover {
+  background-color: brown;
+}
+.settings:hover {
+  background-color: lightgray;
+}
+
+main {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.sidebar {
+  font-size: 1.4rem;
+  border-right: 1px solid;
+
+  padding-right: 30px;
+  height: 100vh;
+}
+.sidebar ul {
+  list-style: none;
+}
+.sidebar ul li {
+  padding: 5px;
+  cursor: pointer;
+}
+.topics-list {
+  padding: 20px;
+}
+.resources-list {
+  padding: 20px;
+}
+.list-title {
+  font-weight: 300;
+  font-size: 0.8rem;
+  padding: 10px;
+}
+.see-more {
+  font-size: 0.7rem;
+}
+.popular-communities {
+  border-left: 1px solid;
+}
+.popular-title {
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 10px;
+}
+.popular-list {
+  background-color: lightgray;
+  padding: 5px;
+  list-style: none;
+}
+.popular-list li {
+  padding: 10px;
+}
