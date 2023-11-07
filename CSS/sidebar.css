@@ -7,11 +7,16 @@
 }
 .sidebar ul {
   list-style: none;
+  position: relative;
+  top: 80px;
 }
 .sidebar ul li {
   padding: 5px;
   font-size: 1.2rem;
   cursor: pointer;
+}
+.sidebar ul li:hover {
+  background-color: lightgray;
 }
 .topics-list {
   padding: 20px;
@@ -20,6 +25,8 @@
   height: 2px;
   width: 100%;
   background-color: black;
+  position: relative;
+  top: 80px;
 }
 .resources-list {
   padding: 20px;

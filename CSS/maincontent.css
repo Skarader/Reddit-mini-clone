@@ -23,7 +23,24 @@
 }
 
 .post-container {
+  position: relative;
   border: 1px solid;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px;
   width: 70%;
-  margin: auto;
+  margin: 1rem auto;
+
+  padding: 35px;
+}
+.post-title {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid black;
+}
+
+.post-tags-container {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+.post-tags {
 }

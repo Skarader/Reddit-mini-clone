@@ -5,9 +5,10 @@
 }
 
 main {
-  margin-top: 1rem;
+  margin: 1rem auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  max-width: 70%;
 }
 
 .see-more {
