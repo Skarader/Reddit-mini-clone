@@ -88,7 +88,7 @@
   resize: none;
 }
 
-.sent-post {
+.send-post {
   position: absolute;
   bottom: 10px;
   width: 100px;
@@ -100,7 +100,7 @@
 
   cursor: pointer;
 }
-.sent-post:hover {
+.send-post:hover {
   scale: 1.1;
   color: rgb(150, 150, 150);
 }
