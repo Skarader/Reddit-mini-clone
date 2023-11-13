@@ -1,4 +1,7 @@
 const parent = document.querySelector(".main-content");
+const newParent = document.querySelector(".new-main-content");
+
+// fetch every post from dummyjson
 
 fetch("https://dummyjson.com/posts/")
   .then(function (res) {
@@ -8,7 +11,10 @@ fetch("https://dummyjson.com/posts/")
     renderPosts(data.posts);
   });
 
-let postArray = []; //
+let postArray = [];
+let newPostArray = [];
+
+// Render dummyjson posts
 
 function renderPosts(posts) {
   for (let i = 0; i < posts.length; i++) {
@@ -34,6 +40,26 @@ function renderPosts(posts) {
     postTags1.classList.add("post-tags");
     postTags2.classList.add("post-tags");
 
+    let thumbsUp = document.createElement("img");
+    thumbsUp.src = "pictures/thumbs-up.png";
+    thumbsUp.classList.add("thumbs-up");
+
+    let reactions = document.createElement("span");
+    reactions.classList.add("reactions");
+
+    post.reactions =
+      localStorage.getItem(`post_${i}_reactions`) || post.reactions;
+
+    thumbsUp.addEventListener("click", function handleReactionClick() {
+      post.reactions++;
+      reactions.innerText = post.reactions;
+
+      localStorage.setItem(`post_${i}_reactions`, post.reactions.toString());
+
+      thumbsUp.removeEventListener("click", handleReactionClick);
+      // localStorage.removeItem(`post_${i}_reactions`);
+    });
+
     postTitle.innerText = post.title;
     postBody.innerText = post.body;
 
@@ -41,12 +67,16 @@ function renderPosts(posts) {
     postTags1.innerText = post.tags[1] + " ";
     postTags2.innerText = post.tags[2];
 
+    reactions.innerText = post.reactions;
+
     postTagsDiv.append(postTags, postTags1, postTags2);
-    createNewPost.append(postTitle, postBody, postTagsDiv);
+    createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
 
     parent.append(postArray[i]);
   }
 }
+
+// Create new post window
 
 let createButton = document.querySelector(".newPostButton");
 let newPostWindow = document.querySelector(".newPostContainer");
@@ -65,6 +95,8 @@ closeButton.addEventListener("click", function () {
 
 let sendPostButton = document.querySelector(".send-post");
 
+// Display new post
+
 sendPostButton.addEventListener("click", function () {
   let title = document.querySelector(".newPostTitle");
   let text = document.querySelector(".newPostText");
@@ -73,7 +105,9 @@ sendPostButton.addEventListener("click", function () {
   let tags3 = document.querySelector(".newPostTags3");
 
   let createNewPost = document.createElement("div");
-  postArray.unshift(createNewPost);
+  console.log("before", newPostArray);
+  newPostArray.unshift(createNewPost);
+  console.log("after", newPostArray);
   createNewPost.classList.add("post-container");
 
   let postTitle = document.createElement("h3");
@@ -94,14 +128,36 @@ sendPostButton.addEventListener("click", function () {
   postTags1.classList.add("post-tags");
   postTags2.classList.add("post-tags");
 
+  let thumbsUp = document.createElement("img");
+  thumbsUp.src = "pictures/thumbs-up.png";
+  thumbsUp.classList.add("thumbs-up");
+
+  let reactions = document.createElement("span");
+  reactions.classList.add("reactions");
+
   postTags.innerText = tags1.value + " ";
   postTags1.innerText = tags2.value + " ";
   postTags2.innerText = tags3.value;
 
-  postTagsDiv.append(postTags, postTags1, postTags2);
-  createNewPost.append(postTitle, postBody, postTagsDiv);
+  let amountOfReactions = 0;
+  reactions.innerText = amountOfReactions;
 
-  parent.insertBefore(createNewPost, postArray[1]);
+  thumbsUp.addEventListener("click", function handleReactionClick() {
+    amountOfReactions++;
+
+    reactions.innerText = amountOfReactions;
+
+    thumbsUp.removeEventListener("click", handleReactionClick);
+  });
+
+  postTagsDiv.append(postTags, postTags1, postTags2);
+  createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
+
+  newParent.insertBefore(createNewPost, newPostArray[1]);
+
+  let saveJson = JSON.stringify(newPostArray);
+  localStorage.setItem("posts", saveJson);
+  console.log(saveJson);
 
   document.querySelector(".newPostTitle").value = "";
   document.querySelector(".newPostText").value = "";
@@ -109,7 +165,59 @@ sendPostButton.addEventListener("click", function () {
   document.querySelector(".newPostTags2").value = "";
   document.querySelector(".newPostTags3").value = "";
 
-  // Close the new post window
   newPostWindow.classList.remove("flex");
   overlay.classList.remove("flex");
 });
+
+if (localStorage.getItem("posts")) {
+  let storedPosts = JSON.parse(localStorage.getItem("posts"));
+  console.log(storedPosts);
+
+  storedPosts.forEach((post) => {
+    let createNewPost = document.createElement("div");
+    createNewPost.classList.add("post-container");
+
+    let postTitle = document.createElement("h3");
+    postTitle.classList.add("post-title");
+    postTitle.innerText = post.title;
+
+    let postBody = document.createElement("span");
+    postBody.classList.add("post-body");
+    postBody.innerText = post.text;
+
+    let postTagsDiv = document.createElement("div");
+    postTagsDiv.classList.add("post-tags-container");
+
+    let postTags = document.createElement("span");
+    let postTags1 = document.createElement("span");
+    let postTags2 = document.createElement("span");
+    postTags.classList.add("post-tags");
+    postTags1.classList.add("post-tags");
+    postTags2.classList.add("post-tags");
+
+    postTags.innerText = post.tags1;
+    postTags1.innerText = post.tags2;
+    postTags2.innerText = post.tags3;
+
+    let thumbsUp = document.createElement("img");
+    thumbsUp.src = "pictures/thumbs-up.png";
+    thumbsUp.classList.add("thumbs-up");
+
+    let reactions = document.createElement("span");
+    reactions.classList.add("reactions");
+    reactions.innerText = post.reactions;
+
+    thumbsUp.addEventListener("click", function handleReactionClick() {
+      post.reactions++;
+
+      reactions.innerText = post.reactions;
+
+      thumbsUp.removeEventListener("click", handleReactionClick);
+    });
+
+    createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
+
+    newParent.insertBefore(createNewPost, newPostArray[1]);
+  });
+}
+// localStorage.removeItem(`posts`);

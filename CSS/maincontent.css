@@ -1,5 +1,16 @@
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-content {
-  margin-top: 30px;
+  margin: 0 auto 30px auto;
+  width: 60%;
+}
+.new-main-content {
+  position: relative;
+  top: 15px;
+  margin: 0 auto;
   width: 60%;
 }
 
@@ -27,13 +38,14 @@
   border: 1px solid;
   border-radius: 15px;
   box-shadow: 5px 5px 10px;
-  width: 70%;
+
   margin: 1rem auto;
 
   padding: 35px;
 }
 .post-title {
   margin-bottom: 1rem;
+  margin-top: 1rem;
   border-bottom: 1px solid black;
 }
 
@@ -43,4 +55,23 @@
   right: 5px;
 }
 .post-tags {
+  border: 1px solid gray;
+  padding: 3px;
+  margin: 5px;
+}
+.reactions {
+  position: absolute;
+  right: 15px;
+  bottom: 10px;
+}
+.thumbs-up {
+  position: absolute;
+  right: 30px;
+  bottom: 0px;
+  scale: 50%;
+
+  cursor: pointer;
+}
+.thumbs-up:hover {
+  scale: 70%;
 }
