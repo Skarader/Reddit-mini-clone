@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="CSS/maincontent.css">
     <link rel="stylesheet" href="CSS/createpost.css">
     <script src="script.js" defer></script>
+
     <title>Document</title>
 </head>
 
@@ -31,7 +32,7 @@
     </header>
     <main>
 
-        <div class="sidebar">
+        <section class="sidebar">
             <ul class="topics-list">
                 <span class="list-title">TOPICS</span>
 
@@ -56,9 +57,11 @@
                 <span class="see-more">See more</span>
             </ul>
 
-        </div>
+        </section>
+
         <div class="overlay"></div>
-        <div class="newPostContainer">
+
+        <section class="newPostContainer">
             <h1>Create New Post</h1>
             <button class="close-window">X</button>
             <textarea name="title" class="newPostTitle" placeholder="Title"></textarea>
@@ -69,21 +72,25 @@
                 <textarea name="tags" class="newPostTags newPostTags3" placeholder="Tag your post"></textarea>
             </div>
             <button class="send-post">Send Post</button>
-        </div>
+        </section>
 
 
-        <div class="main-content-container">
+        <section class="main-content-container">
             <div class="button-container">
                 <button class="newPostButton">Create New Post</button>
             </div>
             <div class="new-main-content">
 
             </div>
+            <div class="old-new-main-content">
+
+            </div>
             <div class="main-content">
 
             </div>
-        </div>
-        <div class="popular-communities">
+        </section>
+
+        <section class="popular-communities">
 
             <ul class="popular-list">
                 <span class="popular-title">Communities</span>
@@ -97,7 +104,7 @@
             </ul>
 
 
-        </div>
+        </section>
 
     </main>
 

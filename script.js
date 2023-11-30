@@ -1,7 +1,7 @@
 const parent = document.querySelector(".main-content");
 const newParent = document.querySelector(".new-main-content");
 
-// fetch every post from dummyjson
+// fetcha info från dummyjson
 
 fetch("https://dummyjson.com/posts/")
   .then(function (res) {
@@ -11,24 +11,27 @@ fetch("https://dummyjson.com/posts/")
     renderPosts(data.posts);
   });
 
-let postArray = [];
-let newPostArray = [];
+// array där all inlägg "sparas"
 
-// Render dummyjson posts
+let postArray = [];
+
+// rendera ut all post från dummyjson
 
 function renderPosts(posts) {
   for (let i = 0; i < posts.length; i++) {
     let post = posts[i];
 
     let createNewPost = document.createElement("div");
-    postArray.push(createNewPost); //
+    postArray.push(createNewPost);
     createNewPost.classList.add("post-container");
 
     let postTitle = document.createElement("h3");
     postTitle.classList.add("post-title");
+    postTitle.innerText = post.title;
 
     let postBody = document.createElement("span");
     postBody.classList.add("post-body");
+    postBody.innerText = post.body;
 
     let postTagsDiv = document.createElement("div");
     postTagsDiv.classList.add("post-tags-container");
@@ -47,6 +50,8 @@ function renderPosts(posts) {
     let reactions = document.createElement("span");
     reactions.classList.add("reactions");
 
+    // local storage samt eventlistenr för att "likea" inlägg och spara alla likes.
+
     post.reactions =
       localStorage.getItem(`post_${i}_reactions`) || post.reactions;
 
@@ -57,11 +62,7 @@ function renderPosts(posts) {
       localStorage.setItem(`post_${i}_reactions`, post.reactions.toString());
 
       thumbsUp.removeEventListener("click", handleReactionClick);
-      // localStorage.removeItem(`post_${i}_reactions`);
     });
-
-    postTitle.innerText = post.title;
-    postBody.innerText = post.body;
 
     postTags.innerText = post.tags[0] + " ";
     postTags1.innerText = post.tags[1] + " ";
@@ -73,10 +74,12 @@ function renderPosts(posts) {
     createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
 
     parent.append(postArray[i]);
+
+    //localStorage.removeItem(`post_${i}_reactions`); // Möjlighet att ta bort alla sparade likes för dummyjson posts
   }
 }
 
-// Create new post window
+// Knapp och eventlistener för att skapa nya posts
 
 let createButton = document.querySelector(".newPostButton");
 let newPostWindow = document.querySelector(".newPostContainer");
@@ -93,30 +96,25 @@ closeButton.addEventListener("click", function () {
   overlay.classList.remove("flex");
 });
 
+// local storage för all nya posts.
+
+let newPostArray = JSON.parse(localStorage.getItem("savedPosts")) || [];
+
 let sendPostButton = document.querySelector(".send-post");
 
-// Display new post
+// rendera ut all nya posts som skapas, postId är för att komma individuallisera inläggen. kommer ihåg vilket inlägg som skapas/likeas
 
-sendPostButton.addEventListener("click", function () {
-  let title = document.querySelector(".newPostTitle");
-  let text = document.querySelector(".newPostText");
-  let tags1 = document.querySelector(".newPostTags1");
-  let tags2 = document.querySelector(".newPostTags2");
-  let tags3 = document.querySelector(".newPostTags3");
-
+function createNewPostDiv(post, postId) {
   let createNewPost = document.createElement("div");
-  console.log("before", newPostArray);
-  newPostArray.unshift(createNewPost);
-  console.log("after", newPostArray);
   createNewPost.classList.add("post-container");
 
   let postTitle = document.createElement("h3");
   postTitle.classList.add("post-title");
-  postTitle.innerText = title.value;
+  postTitle.innerText = post.title;
 
   let postBody = document.createElement("span");
   postBody.classList.add("post-body");
-  postBody.innerText = text.value;
+  postBody.innerText = post.text;
 
   let postTagsDiv = document.createElement("div");
   postTagsDiv.classList.add("post-tags-container");
@@ -128,36 +126,85 @@ sendPostButton.addEventListener("click", function () {
   postTags1.classList.add("post-tags");
   postTags2.classList.add("post-tags");
 
+  let reactions = document.createElement("span");
+  reactions.classList.add("reactions");
+
+  let amountOfReactions = localStorage.getItem(`reactionsCount_${postId}`) || 0;
+  reactions.innerText = amountOfReactions;
+
   let thumbsUp = document.createElement("img");
   thumbsUp.src = "pictures/thumbs-up.png";
   thumbsUp.classList.add("thumbs-up");
 
-  let reactions = document.createElement("span");
-  reactions.classList.add("reactions");
-
-  postTags.innerText = tags1.value + " ";
-  postTags1.innerText = tags2.value + " ";
-  postTags2.innerText = tags3.value;
-
-  let amountOfReactions = 0;
-  reactions.innerText = amountOfReactions;
+  // Eventlistener för att kunna likea nya posts
 
   thumbsUp.addEventListener("click", function handleReactionClick() {
     amountOfReactions++;
-
     reactions.innerText = amountOfReactions;
+
+    localStorage.setItem(
+      `reactionsCount_${postId}`,
+      amountOfReactions.toString()
+    );
 
     thumbsUp.removeEventListener("click", handleReactionClick);
   });
 
+  // localStorage.removeItem(`reactionsCount_${postId}`); // Möjlgheten att ta bort alla sparade likes på nya posts
+
+  postTags.innerText = post.tags1 + " ";
+  postTags1.innerText = post.tags2 + " ";
+  postTags2.innerText = post.tags3;
+
   postTagsDiv.append(postTags, postTags1, postTags2);
   createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
 
-  newParent.insertBefore(createNewPost, newPostArray[1]);
+  return createNewPost;
+}
 
-  let saveJson = JSON.stringify(newPostArray);
-  localStorage.setItem("posts", saveJson);
-  console.log(saveJson);
+// loopa igenom nya posts och appenda de till sidan.
+
+for (let i = 0; i < newPostArray.length; i++) {
+  let createdPostDiv = createNewPostDiv(
+    newPostArray[i],
+    newPostArray[i].postId
+  );
+  newParent.append(createdPostDiv);
+}
+
+// generare unikt id för alla skapade posts
+
+function generateId() {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  return `${timestamp}_${random}`;
+}
+
+// eventlistener och function till att skapa nya posts när man klickar på send post knappen
+
+sendPostButton.addEventListener("click", function () {
+  let title = document.querySelector(".newPostTitle");
+  let text = document.querySelector(".newPostText");
+  let tags1 = document.querySelector(".newPostTags1");
+  let tags2 = document.querySelector(".newPostTags2");
+  let tags3 = document.querySelector(".newPostTags3");
+
+  let newPostObject = {
+    title: title.value,
+    text: text.value,
+    tags1: tags1.value,
+    tags2: tags2.value,
+    tags3: tags3.value,
+    postId: generateId(),
+    reactions: 0,
+  };
+
+  newPostArray.unshift(newPostObject);
+
+  localStorage.setItem("savedPosts", JSON.stringify(newPostArray));
+
+  let createdPostDiv = createNewPostDiv(newPostObject, newPostObject.postId);
+  newParent.insertBefore(createdPostDiv, newParent.firstChild);
 
   document.querySelector(".newPostTitle").value = "";
   document.querySelector(".newPostText").value = "";
@@ -169,55 +216,4 @@ sendPostButton.addEventListener("click", function () {
   overlay.classList.remove("flex");
 });
 
-if (localStorage.getItem("posts")) {
-  let storedPosts = JSON.parse(localStorage.getItem("posts"));
-  console.log(storedPosts);
-
-  storedPosts.forEach((post) => {
-    let createNewPost = document.createElement("div");
-    createNewPost.classList.add("post-container");
-
-    let postTitle = document.createElement("h3");
-    postTitle.classList.add("post-title");
-    postTitle.innerText = post.title;
-
-    let postBody = document.createElement("span");
-    postBody.classList.add("post-body");
-    postBody.innerText = post.text;
-
-    let postTagsDiv = document.createElement("div");
-    postTagsDiv.classList.add("post-tags-container");
-
-    let postTags = document.createElement("span");
-    let postTags1 = document.createElement("span");
-    let postTags2 = document.createElement("span");
-    postTags.classList.add("post-tags");
-    postTags1.classList.add("post-tags");
-    postTags2.classList.add("post-tags");
-
-    postTags.innerText = post.tags1;
-    postTags1.innerText = post.tags2;
-    postTags2.innerText = post.tags3;
-
-    let thumbsUp = document.createElement("img");
-    thumbsUp.src = "pictures/thumbs-up.png";
-    thumbsUp.classList.add("thumbs-up");
-
-    let reactions = document.createElement("span");
-    reactions.classList.add("reactions");
-    reactions.innerText = post.reactions;
-
-    thumbsUp.addEventListener("click", function handleReactionClick() {
-      post.reactions++;
-
-      reactions.innerText = post.reactions;
-
-      thumbsUp.removeEventListener("click", handleReactionClick);
-    });
-
-    createNewPost.append(postTitle, postBody, postTagsDiv, reactions, thumbsUp);
-
-    newParent.insertBefore(createNewPost, newPostArray[1]);
-  });
-}
-// localStorage.removeItem(`posts`);
+// localStorage.removeItem(`savedPosts`); // Möjligheten att ta bort alla sparade posts
