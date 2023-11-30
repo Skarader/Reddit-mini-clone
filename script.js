@@ -50,7 +50,7 @@ function renderPosts(posts) {
     let reactions = document.createElement("span");
     reactions.classList.add("reactions");
 
-    // local storage samt eventlistenr för att "likea" inlägg och spara alla likes.
+    // local storage samt eventlistener för att "likea" inlägg och spara alla likes.
 
     post.reactions =
       localStorage.getItem(`post_${i}_reactions`) || post.reactions;
@@ -75,7 +75,7 @@ function renderPosts(posts) {
 
     parent.append(postArray[i]);
 
-    //localStorage.removeItem(`post_${i}_reactions`); // Möjlighet att ta bort alla sparade likes för dummyjson posts
+    //localStorage.removeItem(`post_${i}_reactions`); // Ta bort alla sparade likes för dummyjson posts
   }
 }
 
@@ -102,7 +102,7 @@ let newPostArray = JSON.parse(localStorage.getItem("savedPosts")) || [];
 
 let sendPostButton = document.querySelector(".send-post");
 
-// rendera ut all nya posts som skapas, postId är för att komma individuallisera inläggen. kommer ihåg vilket inlägg som skapas/likeas
+// function för att skapa nya posts, postId är för att individuallisera inläggen. för att komma ihåg vilket inlägg som skapas/likeas
 
 function createNewPostDiv(post, postId) {
   let createNewPost = document.createElement("div");
@@ -150,7 +150,7 @@ function createNewPostDiv(post, postId) {
     thumbsUp.removeEventListener("click", handleReactionClick);
   });
 
-  // localStorage.removeItem(`reactionsCount_${postId}`); // Möjlgheten att ta bort alla sparade likes på nya posts
+  // localStorage.removeItem(`reactionsCount_${postId}`); // Ta bort alla sparade likes på nya posts
 
   postTags.innerText = post.tags1 + " ";
   postTags1.innerText = post.tags2 + " ";
@@ -216,4 +216,4 @@ sendPostButton.addEventListener("click", function () {
   overlay.classList.remove("flex");
 });
 
-// localStorage.removeItem(`savedPosts`); // Möjligheten att ta bort alla sparade posts
+// localStorage.removeItem(`savedPosts`); // Ta bort alla sparade posts
