@@ -75,7 +75,7 @@ function renderPosts(posts) {
 
     parent.append(postArray[i]);
 
-    //localStorage.removeItem(`post_${i}_reactions`); // Ta bort alla sparade likes för dummyjson posts
+    // localStorage.removeItem(`post_${i}_reactions`); // Ta bort alla sparade likes för dummyjson posts
   }
 }
 
